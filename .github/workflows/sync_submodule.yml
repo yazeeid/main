@@ -25,7 +25,8 @@ jobs:
         run: |
           git clone https://yazeeid:${{ secrets.GITHUB_TOKEN }}@github.com/yazeeid/sub.git
           cd sub
-          git submodule update --remote --merge
+          cd main
+          git pull
           if [ -n "$(git status --porcelain)" ]; then
             git add .
             git commit -m "Automated update of base_php_app submodule"
