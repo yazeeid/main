@@ -20,15 +20,15 @@ jobs:
       # Step 2: Clone sub_php_app repository
       - name: Clone sub_php_app repository
         run: |
-          git clone https://github.com/yourusername/sub_php_app.git
-          cd sub_php_app
+          git clone https://github.com/yazeeid/sub.git
+          cd sub
           git submodule update --init --remote  # Ensures the submodule is updated with latest base_php_app changes
 
       # Step 3: Commit and push the updated submodule to sub_php_app
-      - name: Commit and Push Changes to sub_php_app
+      - name: Commit and Push Changes to sub
         run: |
-          cd sub_php_app
-          git add base_php_app
+          cd sub
+          git add main
           git commit -m "Update base_php_app submodule to latest version"
           git push origin main
         env:
