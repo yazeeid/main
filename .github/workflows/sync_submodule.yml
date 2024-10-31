@@ -12,22 +12,21 @@ jobs:
 
     steps:
       # Step 1: Check out the base_php_app repository with submodules
-      - name: Checkout base_php_app
+      - name: Checkout base_php_app with submodules
         uses: actions/checkout@v2
         with:
-          submodules: recursive  # Ensures that submodules are updated
+          submodules: true  # Ensures submodules are checked out
 
-      # Step 2: Clone sub_php_app repository
-      - name: Clone sub_php_app repository
+      # Step 2: Navigate to submodule and ensure it’s updated
+      - name: Update submodule to latest
         run: |
-          
-          git submodule update --init --remote  # Ensures the submodule is updated with latest base_php_app changes
+          git submodule update --remote --merge
 
-      # Step 3: Commit and push the updated submodule to sub_php_app
+      # Step 3: Commit and push the updated submodule
       - name: Commit and Push Changes to sub
         run: |
           cd sub
-          git add 
+          git add .
           git commit -m "Update base_php_app submodule to latest version"
           git push origin main
         env:
