@@ -1,33 +1,26 @@
-name: Sync Submodule to sub_php_app
+name: Sync Submodule
 
-# Trigger this workflow whenever there is a push to the main branch of base_php_app
 on:
   push:
     branches:
-      - main
+      - main  # Trigger on pushes to the main branch
 
 jobs:
   update-submodule:
     runs-on: ubuntu-latest
-
     steps:
-      # Step 1: Check out the base_php_app repository with submodules
-      - name: Checkout base_php_app with submodules
+      - name: Checkout base_php_app
         uses: actions/checkout@v2
         with:
-          submodules: true  # Ensures submodules are checked out
+          repository: yazeeid/main
+          token: ${{ secrets.GITHUB_TOKEN }}
+          submodules: 'recursive'
 
-      # Step 2: Navigate to submodule and ensure it’s updated
-      - name: Update submodule to latest
+      - name: Update sub_php_app
         run: |
-          git submodule update --remote --merge
-
-      # Step 3: Commit and push the updated submodule
-      - name: Commit and Push Changes to sub
-        run: |
+          git clone https://yazeeid:${{ secrets.GITHUB_TOKEN }}@github.com/yazeeid/sub.git
           cd sub
+          git submodule update --remote --merge
           git add .
-          git commit -m "Update base_php_app submodule to latest version"
+          git commit -m "Automated update of main submodule"
           git push origin main
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Uses GitHub's token to authorize push
